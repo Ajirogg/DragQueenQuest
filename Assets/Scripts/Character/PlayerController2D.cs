@@ -84,6 +84,8 @@ public class PlayerController2D : MonoBehaviour
             lookUp = false;
         }
 
+        
+
         //Diminution de la hitbox et de la vitesse;
         if (Input.GetButton("Crouch"))
         {           

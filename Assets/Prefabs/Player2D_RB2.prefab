@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1907155914}
   - component: {fileID: 1907155918}
   m_Layer: 0
-  m_Name: Player2D
+  m_Name: Player2D_RB2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,12 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3654ccba93134443a778236865adb30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
-  jumpStrength: 10
-  camLookRight: {x: 4, y: 3, z: -10}
-  camLookLeft: {x: -4, y: 3, z: -10}
-  cam: {fileID: 0}
-  body: {fileID: 4236769866527541365}
+  speed: 6
+  gForce: 20
+  jumpSpeed: 10
 --- !u!65 &1907155913
 BoxCollider:
   m_ObjectHideFlags: 0

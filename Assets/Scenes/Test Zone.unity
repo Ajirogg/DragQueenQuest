@@ -2406,7 +2406,7 @@ GameObject:
   - component: {fileID: 163924487}
   - component: {fileID: 163924486}
   - component: {fileID: 163924485}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirstFloor (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20598,6 +20598,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1737377807, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: gForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737377807, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: speed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737377807, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: Ground.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737377807, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: groundDistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737377807, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: jumpHeight
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737377807, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: GroundDistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737377807, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: layerGround.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907155914, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907155914, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907155914, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907155914, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
 --- !u!4 &1565565487 stripped
@@ -20723,7 +20767,7 @@ GameObject:
   - component: {fileID: 1579033382}
   - component: {fileID: 1579033381}
   - component: {fileID: 1579033380}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirstFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27157,7 +27201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066306336}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -28.9, y: 8.65, z: 0}
+  m_LocalPosition: {x: -28.9, y: 9.855, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1883977661}

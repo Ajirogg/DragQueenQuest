@@ -4,59 +4,99 @@ using UnityEngine;
 
 public class PlayerController2D : MonoBehaviour
 {
+    // CHARACTER CONTROLLER
+    private CharacterController charController;
+    private Vector3 velocity;
+    private bool isGrounded = true;
 
-    CharacterController cc;
+    [Header("MOVEMENT")]
+    public float playerSpeed = 7f;
+    public LayerMask layerGround;
 
-    public float speed = 6f;
-    public float gForce = 20f;
-    public float jumpSpeed = 10f;
+    [Header("JUMP")]
+    public float gravityForce = 10f;
+    public float jumpHeight = 2f;
 
-   public bool simpleMove = true;
-
-    private float xSpeed;
-    private float ySpeed;
-    private float movementSpeed;
-    private Vector3 moveDirection = Vector3.zero;
+    // GROUND DETECTION PARAMETER
+    public float sphereRadius = 0.2f;
 
     // Use this for initialization
     void Start()
     {
-        cc = GetComponent<CharacterController>();
+        charController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        //GRAVITY DECLARED FIRST
+        velocity.y -= gravityForce * Time.deltaTime;
+        charController.Move(velocity * Time.deltaTime);
 
-        float side = Input.GetAxis("Horizontal");
+        // VARS
+        float moveX = Input.GetAxis("Horizontal");
 
-        moveDirection = new Vector3(side, 0, 0);
-        moveDirection = transform.TransformDirection(moveDirection);
-        moveDirection *= speed;
+        // MOVEMENT
+        Movement(moveX);
+     
+        // CUSTOM GROUND CHECK
+        isGrounded = Physics.CheckSphere(transform.position - new Vector3(0f, 1, 0f), sphereRadius, layerGround);
 
-        if (cc.isGrounded)
-        {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= speed;
-            if (Input.GetButton("Jump"))
-            {
-                moveDirection.y = jumpSpeed;
-            }
-        }
+        // Keep the following, jump won't work otherwise
+        if (isGrounded)
+            velocity.y = 0f;
 
-        if (Input.GetKey("a"))
-            simpleMove = !simpleMove;
+        //Debug.Log(isGrounded); //Debug
 
-        moveDirection.y -= gForce * Time.fixedDeltaTime;
+        // JUMP
+        if (Input.GetButtonDown("Jump") && isGrounded)
+            velocity.y += Mathf.Sqrt(jumpHeight * 2f * gravityForce);
+        // Mathf.Sqrt useful when you want to have more control over the jump action.
 
-        if(simpleMove)
-            cc.SimpleMove(moveDirection * Time.fixedDeltaTime);
-        else
-            cc.Move(moveDirection * Time.fixedDeltaTime);
+        //Debug.Log(Mathf.Sqrt(jumpHeight * 2f * gravityForce)); //Debug
+    }
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+    private void Movement(float moveX)
+    {
+        Vector3 move = new Vector3(moveX, 0, 0);
+        charController.Move(move * Time.deltaTime * playerSpeed);
+    }
 
-        Debug.Log(Time.deltaTime);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void OnDrawGizmos() //Sphere preview
+    {
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position - new Vector3(0f, 1, 0f), sphereRadius);
     }
 }

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController2D : MonoBehaviour
+public class TestPC : MonoBehaviour
 {
-
     [SerializeField]
     private float movementSpeed = 10f;
     [SerializeField]
@@ -18,7 +17,19 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField]
     private float slopeForceRayLength;
 
+    private Vector3 velocity;
+
+    [SerializeField]
+    private float gravityForce = 20f;
+
+    [SerializeField]
+    private float fallMultiplier = 10f;
+
+    [SerializeField]
+    private float lowJumpMultiplier = 10f;
+
     bool isJumping;
+    bool Jumping;
 
 
     private CharacterController charController;
@@ -38,6 +49,17 @@ public class PlayerController2D : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+
+        if (velocity.y < 0)
+        {
+            velocity += Vector3.up * Physics2D.gravity.y * (fallMultiplier) * Time.deltaTime;
+        }
+        else if (velocity.y > 0 && !Input.GetKeyDown(jumpkey))
+        {
+            velocity += Vector3.up * Physics2D.gravity.y * (lowJumpMultiplier) * Time.deltaTime;
+        }
+
+
     }
 
     private void PlayerMovement()
@@ -61,7 +83,10 @@ public class PlayerController2D : MonoBehaviour
             transform.position = newPosition;
         }
 
-        jumpInput();
+        Jump();
+
+
+        //jumpInput();
     }
 
     //Detect if player is on a slope
@@ -78,7 +103,7 @@ public class PlayerController2D : MonoBehaviour
         return false;
     }
 
-    private void jumpInput()
+    /*private void jumpInput()
     {
         if (Input.GetKeyDown(jumpkey) && !isJumping)
         {
@@ -105,84 +130,24 @@ public class PlayerController2D : MonoBehaviour
 
         charController.slopeLimit = 45.0f;
         isJumping = false;
-    }
-
-
-
-
-
-
-/*using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlayerController2D : MonoBehaviour
-{
-    // CHARACTER CONTROLLER
-    private CharacterController charController;
-    private Vector3 velocity;
-    private bool isGrounded = true;
-
-    [Header("MOVEMENT")]
-    public float playerSpeed = 7f;
-    public LayerMask layerGround;
-
-    [Header("JUMP")]
-    public float gravityForce = 10f;
-    public float jumpHeight = 2f;
-
-    // GROUND DETECTION PARAMETER
-    public float sphereRadius = 0.2f;
-
-    // Use this for initialization
-    void Start()
-    {
-        charController = GetComponent<CharacterController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //GRAVITY DECLARED FIRST
-        velocity.y -= gravityForce * Time.deltaTime;
-        charController.Move(velocity * Time.deltaTime);
-
-        // VARS
-        float moveX = Input.GetAxis("Horizontal");
-
-        // MOVEMENT
-        Movement(moveX);
-     
-        // CUSTOM GROUND CHECK
-        isGrounded = Physics.CheckSphere(transform.position - new Vector3(0f, 1, 0f), sphereRadius, layerGround);
-
-        // Keep the following, jump won't work otherwise
-        if (isGrounded)
-            velocity.y = 0f;
-
-        //Debug.Log(isGrounded); //Debug
-
-        // JUMP
-        if (Input.GetButtonDown("Jump") && isGrounded)
-            velocity.y += Mathf.Sqrt(jumpHeight * 2f * gravityForce);
-        // Mathf.Sqrt useful when you want to have more control over the jump action.
-
-        //Debug.Log(Mathf.Sqrt(jumpHeight * 2f * gravityForce)); //Debug
-    }
-
-    private void Movement(float moveX)
-    {
-        Vector3 move = new Vector3(moveX, 0, 0);
-        charController.Move(move * Time.deltaTime * playerSpeed);
-    }
-    */
-
-
-
-/*private void OnDrawGizmos() //Sphere preview
-    {
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawWireSphere(transform.position - new Vector3(0f, 1, 0f), sphereRadius);
     }*/
+
+    void Jump()
+    {
+
+        if (Input.GetKeyDown(jumpkey) && !isJumping)
+        {
+            velocity = jumpMultiplier * Vector3.up;
+            Jumping = true;
+        }
+
+        if (Input.GetKeyDown(jumpkey) && isJumping)
+        {
+            isJumping = true;
+        }
+        else
+        {
+            isJumping = false;
+        }
+    }
 }

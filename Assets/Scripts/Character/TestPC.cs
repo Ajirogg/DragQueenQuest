@@ -48,6 +48,8 @@ public class TestPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(charController.isGrounded);
+
         PlayerMovement();
 
         if (velocity.y < 0)
@@ -135,18 +137,24 @@ public class TestPC : MonoBehaviour
     void Jump()
     {
 
+        Debug.Log("Input.GetKeyDown(jumpkey) = " + Input.GetKeyDown(jumpkey));
+        Debug.Log("isJumping = " + isJumping);
+
         if (Input.GetKeyDown(jumpkey) && !isJumping)
         {
+            Debug.Log("jump && !isJumping");
             velocity = jumpMultiplier * Vector3.up;
             Jumping = true;
         }
 
         if (Input.GetKeyDown(jumpkey) && isJumping)
         {
+            Debug.Log("jump && isJumping");
             isJumping = true;
         }
         else
         {
+            Debug.Log("Default");
             isJumping = false;
         }
     }

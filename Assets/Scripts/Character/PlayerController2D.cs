@@ -37,6 +37,7 @@ public class PlayerController2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         PlayerMovement();
     }
 
@@ -54,12 +55,13 @@ public class PlayerController2D : MonoBehaviour
         if ((horiz != 0) && OnSlope())
             charController.Move(Vector3.down * charController.height / 2 * slopeForce * Time.deltaTime);
 
-        if (transform.position.z != 0)
+       /* if (transform.position.z != 0)
         {
             Vector3 newPosition = transform.position;
             newPosition.z = 0;
             transform.position = newPosition;
-        }
+        }*/
+
 
         jumpInput();
     }
@@ -85,7 +87,7 @@ public class PlayerController2D : MonoBehaviour
             isJumping = true;
             StartCoroutine(JumpEvent());
         }
-        Debug.Log(isJumping); //Debug
+
     }
 
     private IEnumerator JumpEvent()

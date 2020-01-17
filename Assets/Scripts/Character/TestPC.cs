@@ -76,12 +76,12 @@ public class TestPC : MonoBehaviour
         if ((horiz != 0) && OnSlope())
             charController.Move(Vector3.down * charController.height / 2 * slopeForce * Time.deltaTime);
 
-        if (transform.position.z != 0)
+        /*if (transform.position.z != 0)
         {
             Vector3 newPosition = transform.position;
             newPosition.z = 0;
             transform.position = newPosition;
-        }
+        }*/
 
         Jump();
 

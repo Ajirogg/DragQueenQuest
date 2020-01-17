@@ -11,7 +11,7 @@ public class PlayerCamera : MonoBehaviour
     private void Update()
     {
         Vector3 newPosition = Target.position;
-        newPosition.z = -10;
+        newPosition.z = -20;
         transform.position = Vector3.Slerp(transform.position, newPosition + offset, FollowSpeed * Time.deltaTime);
     }
 }

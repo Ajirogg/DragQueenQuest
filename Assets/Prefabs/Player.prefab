@@ -153,8 +153,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2526501689423689514}
-  m_Father: {fileID: 2526501691264639918}
-  m_RootOrder: 0
+  m_Father: {fileID: 1856582943981372786}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2526501691264639919
 GameObject:
@@ -183,7 +183,6 @@ Transform:
   m_LocalPosition: {x: -28.9, y: 9.855, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2526501691178795314}
   - {fileID: 1856582943981372786}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -195,6 +194,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2526501691264639918}
     m_Modifications:
+    - target: {fileID: 4236769866499944417, guid: e2108093cdf4123448fbdc68bdc4be9f,
+        type: 3}
+      propertyPath: m_Name
+      value: Player2D_CC2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236769866499944417, guid: e2108093cdf4123448fbdc68bdc4be9f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4236769866499944418, guid: e2108093cdf4123448fbdc68bdc4be9f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -233,7 +242,7 @@ PrefabInstance:
     - target: {fileID: 4236769866499944418, guid: e2108093cdf4123448fbdc68bdc4be9f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4236769866499944418, guid: e2108093cdf4123448fbdc68bdc4be9f,
         type: 3}
@@ -249,16 +258,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4236769866499944417, guid: e2108093cdf4123448fbdc68bdc4be9f,
-        type: 3}
-      propertyPath: m_Name
-      value: Player2D_CC2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4236769866499944417, guid: e2108093cdf4123448fbdc68bdc4be9f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1737377807, guid: e2108093cdf4123448fbdc68bdc4be9f, type: 3}
       propertyPath: jumpFallOff.m_Curve.Array.size

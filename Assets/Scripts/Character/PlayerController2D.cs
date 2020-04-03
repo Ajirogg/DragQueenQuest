@@ -4,43 +4,39 @@ using UnityEngine;
 
 public class PlayerController2D : MonoBehaviour
 {
+    // Movement
+    [SerializeField] private float movementSpeed = 10f;
 
-    [SerializeField]
-    private float movementSpeed = 10f;
-    [SerializeField]
-    private KeyCode jumpkey;
-    [SerializeField]
-    private AnimationCurve jumpFallOff;
-    [SerializeField]
-    private float jumpMultiplier;
-    [SerializeField]
-    private float slopeForce;
-    [SerializeField]
-    private float slopeForceRayLength;
+    // Slope
+    [SerializeField] private float slopeForce;
+    [SerializeField] private float slopeForceRayLength;
 
-    bool isJumping;
+    // Jump 
+    [SerializeField] private KeyCode jumpkey;    
+    [SerializeField] private float jumpMultiplier;
+    [SerializeField] private AnimationCurve jumpFallOff;
+    bool isJumping;    
 
+    //Camera
     private bool lookRight = true;
-
     private Vector3 camTarget;
-    //[SerializeField] private float WaitTimeBeforeLookUp = 2.0f;
     [SerializeField] private Vector3 camLookRight;
     [SerializeField] private Vector3 camLookLeft;
-   // [SerializeField] private Vector3 camLookUp = Vector3.zero;
+    // [SerializeField] private float WaitTimeBeforeLookUp = 2.0f;
+    // [SerializeField] private Vector3 camLookUp = Vector3.zero;
 
     [Header("Scene Objects")]
     [SerializeField] Camera cam;
     [SerializeField] private GameObject steadyStick = null;
     [SerializeField] private GameObject body = null;
 
+
     private CharacterController charController;
 
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
-
         camTarget = camLookRight;
-        lookRight = true;
     }
 
     // Start is called before the first frame update
@@ -68,14 +64,6 @@ public class PlayerController2D : MonoBehaviour
         //Stop the bouncing on slopes
         if ((horiz != 0) && OnSlope())
             charController.Move(Vector3.down * charController.height / 2 * slopeForce * Time.deltaTime);
-
-       /* if (transform.position.z != 0)
-        {
-            Vector3 newPosition = transform.position;
-            newPosition.z = 0;
-            transform.position = newPosition;
-        }*/
-
 
         jumpInput();
         CameraMovement();
@@ -138,14 +126,10 @@ public class PlayerController2D : MonoBehaviour
             if (lookRight)
             {
                 camTarget = camLookRight;
-                // body.transform.localRotation = new Quaternion(0, 0, 0, 0);
-                // Debug.Log(body.transform.localRotation);
             }
             else
             {
                 camTarget = camLookLeft;
-                // body.transform.localRotation = new Quaternion(0, 0, 0, 0);
-                // Debug.Log(body.transform.localRotation);
             }
         }
 

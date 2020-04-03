@@ -99,7 +99,6 @@ public class PlayerController2D : MonoBehaviour
             isJumping = true;
             StartCoroutine(JumpEvent());
         }
-
     }
 
     private IEnumerator JumpEvent()
@@ -132,16 +131,18 @@ public class PlayerController2D : MonoBehaviour
             if (lookRight)
             {
                 camTarget = camLookRight;
-                body.transform.localRotation = new Quaternion(0, 0, 0, 0);
-                Debug.Log(body.transform.localRotation);
+                // body.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                // Debug.Log(body.transform.localRotation);
             }
             else
             {
                 camTarget = camLookLeft;
-                body.transform.localRotation = new Quaternion(0, 180, 0, 0);
-                Debug.Log(body.transform.localRotation);
+                // body.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                // Debug.Log(body.transform.localRotation);
             }
         }
+
+
         /*  if (lookUp)
           {
               if (cam.transform.localPosition != camTarget + camLookUp)

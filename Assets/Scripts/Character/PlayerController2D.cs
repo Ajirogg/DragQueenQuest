@@ -41,6 +41,9 @@ public class PlayerController2D : MonoBehaviour
     private GameObject lastCheckptReach;
     private GameObject previousTargetPosition;
 
+    private Vector3 nextPosition;
+    private Vector3 prevPosition;
+
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
@@ -62,6 +65,12 @@ public class PlayerController2D : MonoBehaviour
 
     private void PlayerMovement()
     {
+
+
+
+
+
+
         float horiz = Input.GetAxis("Horizontal") * movementSpeed;
 
         Vector3 rightMovement = transform.right * horiz;
@@ -158,6 +167,9 @@ public class PlayerController2D : MonoBehaviour
 
         if (BetweenActualAndLastCheckpoint())
         {
+            nextPosition = targetCheckpt;
+            prevPosition = targetPrev;
+
             if (lookRight)
             {
                 body.transform.LookAt(targetCheckpt);
@@ -167,6 +179,8 @@ public class PlayerController2D : MonoBehaviour
             }
         } else
         {
+            nextPosition = targetNext;
+            prevPosition = targetCheckpt;
             if (lookRight)
             {
                 body.transform.LookAt(targetNext);

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Slope
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

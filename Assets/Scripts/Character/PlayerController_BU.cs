@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController2D : MonoBehaviour
+public class PlayerController_BU: MonoBehaviour
 {
     // Movement
     [SerializeField] private float movementSpeed = 10f;
@@ -12,17 +12,18 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private float slopeForceRayLength;
 
     // Jump 
-    [SerializeField] private KeyCode jumpkey;    
+    [SerializeField] private KeyCode jumpkey;
     [SerializeField] private float jumpMultiplier;
     [SerializeField] private AnimationCurve jumpFallOff;
-    bool isJumping;    
+    bool isJumping;
 
     //Camera
     private bool lookRight = true;
     private Vector3 camTarget;
     [SerializeField] private Vector3 camLookRight;
     [SerializeField] private Vector3 camLookLeft;
-
+    // [SerializeField] private float WaitTimeBeforeLookUp = 2.0f;
+    // [SerializeField] private Vector3 camLookUp = Vector3.zero;
 
     [Header("Scene Objects")]
     [SerializeField] Camera cam;
@@ -38,7 +39,6 @@ public class PlayerController2D : MonoBehaviour
     private CharacterController charController;
 
     private GameObject nextTargetPosition;
-    private GameObject lastCheckptReach;
     private GameObject previousTargetPosition;
 
     private void Awake()
@@ -57,7 +57,6 @@ public class PlayerController2D : MonoBehaviour
     void Update()
     {
         PlayerMovement();
-        
     }
 
     private void PlayerMovement()
@@ -67,6 +66,7 @@ public class PlayerController2D : MonoBehaviour
         Vector3 rightMovement = transform.right * horiz;
 
         charController.SimpleMove(rightMovement);
+        //charController.SimpleMove(Vector3.ClampMagnitude(rightMovement, 1.0f) * movementSpeed);
 
 
         //Stop the bouncing on slopes
@@ -75,7 +75,6 @@ public class PlayerController2D : MonoBehaviour
 
         jumpInput();
         CameraMovement();
-        PlayerOrientation();
     }
 
     //Detect if player is on a slope
@@ -131,15 +130,31 @@ public class PlayerController2D : MonoBehaviour
             if (lookRight)
             {
                 camTarget = camLookRight;
+                Vector3 target = new Vector3(nextTargetPosition.transform.position.x, body.transform.position.y, nextTargetPosition.transform.position.z);
+                body.transform.LookAt(target);
 
             }
             else
             {
+                Vector3 target = new Vector3(previousTargetPosition.transform.position.x, body.transform.position.y, previousTargetPosition.transform.position.z);
+                body.transform.LookAt(target);
                 camTarget = camLookLeft;
             }
         }
 
 
+        /*  if (lookUp)
+          {
+              if (cam.transform.localPosition != camTarget + camLookUp)
+              {
+                  if (!charController.isGrounded)
+                      cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, camTarget + camLookUp, 0.025f);
+                  else
+                      cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, camTarget + camLookUp, 0.1f);
+              }
+          }
+          else
+          {*/
         if (cam.transform.localPosition != camTarget)
         {
             if (!charController.isGrounded)
@@ -147,60 +162,22 @@ public class PlayerController2D : MonoBehaviour
             else
                 cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, camTarget, 0.05f);
         }
-    }
-
-    private void PlayerOrientation()
-    {
-
-        Vector3 targetPrev = new Vector3(previousTargetPosition.transform.position.x, body.transform.position.y, previousTargetPosition.transform.position.z);
-        Vector3 targetCheckpt = new Vector3(lastCheckptReach.transform.position.x, body.transform.position.y, lastCheckptReach.transform.position.z);
-        Vector3 targetNext = new Vector3(nextTargetPosition.transform.position.x, body.transform.position.y, nextTargetPosition.transform.position.z);
-
-        if (BetweenActualAndLastCheckpoint())
-        {
-            if (lookRight)
-            {
-                body.transform.LookAt(targetCheckpt);
-            } else
-            {
-                body.transform.LookAt(targetPrev);
-            }
-        } else
-        {
-            if (lookRight)
-            {
-                body.transform.LookAt(targetNext);
-            }
-            else
-            {
-                body.transform.LookAt(targetCheckpt);
-            }
-        }
-    }
-
-    private bool BetweenActualAndLastCheckpoint()
-    {
-        Vector3 prevCheckptPos = previousTargetPosition.transform.position;
-        Vector3 playerPos = transform.position;
-        Vector3 lastCheckptReachPos = lastCheckptReach.transform.position;
-
-        
-        return Vector3.Dot((lastCheckptReachPos - prevCheckptPos).normalized, (playerPos - lastCheckptReachPos).normalized) < 0f && Vector3.Dot((prevCheckptPos - lastCheckptReachPos).normalized, (playerPos - prevCheckptPos).normalized) < 0f;
-        
+        // }
 
     }
 
-    public void SetNewCheckpoints(GameObject prevCheckpt, GameObject lastCheckpointReach, GameObject nextCheckpt)
+    public void SetNewCheckpoints(GameObject prevCheckpt, GameObject nextCheckpt)
     {
         previousTargetPosition = prevCheckpt;
-        lastCheckptReach = lastCheckpointReach;
         nextTargetPosition = nextCheckpt;
-    }
+        Debug.Log("previous point = " + prevCheckpt.name);
+        Debug.Log("next point = " + nextCheckpt.name);
 
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Checkpoint")
+        if (other.gameObject.tag == "Checkpoint")
         {
             Debug.Log(other.gameObject.name);
             needNewCheckpoints = true;
@@ -208,3 +185,79 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 }
+
+
+
+/*using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+
+    public class PlayerController2D : MonoBehaviour
+    {
+        // CHARACTER CONTROLLER
+        private CharacterController charController;
+        private Vector3 velocity;
+        private bool isGrounded = true;
+
+        [Header("MOVEMENT")]
+        public float playerSpeed = 7f;
+        public LayerMask layerGround;
+
+        [Header("JUMP")]
+        public float gravityForce = 10f;
+        public float jumpHeight = 2f;
+
+        // GROUND DETECTION PARAMETER
+        public float sphereRadius = 0.2f;
+
+        // Use this for initialization
+        void Start()
+        {
+            charController = GetComponent<CharacterController>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            //GRAVITY DECLARED FIRST
+            velocity.y -= gravityForce * Time.deltaTime;
+            charController.Move(velocity * Time.deltaTime);
+
+            // VARS
+            float moveX = Input.GetAxis("Horizontal");
+
+            // MOVEMENT
+            Movement(moveX);
+
+            // CUSTOM GROUND CHECK
+            isGrounded = Physics.CheckSphere(transform.position - new Vector3(0f, 1, 0f), sphereRadius, layerGround);
+
+            // Keep the following, jump won't work otherwise
+            if (isGrounded)
+                velocity.y = 0f;
+
+            //Debug.Log(isGrounded); //Debug
+
+            // JUMP
+            if (Input.GetButtonDown("Jump") && isGrounded)
+                velocity.y += Mathf.Sqrt(jumpHeight * 2f * gravityForce);
+            // Mathf.Sqrt useful when you want to have more control over the jump action.
+
+            //Debug.Log(Mathf.Sqrt(jumpHeight * 2f * gravityForce)); //Debug
+        }
+
+        private void Movement(float moveX)
+        {
+            Vector3 move = new Vector3(moveX, 0, 0);
+            charController.Move(move * Time.deltaTime * playerSpeed);
+        }
+        */
+
+
+
+/*private void OnDrawGizmos() //Sphere preview
+    {
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position - new Vector3(0f, 1, 0f), sphereRadius);
+    }*/

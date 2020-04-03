@@ -48,7 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10
+  slopeForce: 10
+  slopeForceRayLength: 10
   jumpkey: 32
+  jumpMultiplier: 10
   jumpFallOff:
     serializedVersion: 2
     m_Curve:
@@ -73,14 +76,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  jumpMultiplier: 10
-  slopeForce: 10
-  slopeForceRayLength: 10
   camLookRight: {x: 4, y: 3, z: -6}
   camLookLeft: {x: -4, y: 3, z: -6}
   cam: {fileID: 3087213870656648027}
   steadyStick: {fileID: 3087213870588131300}
   body: {fileID: 6482388223932828963}
+  needNewCheckpoints: 0
+  checkpointName: 
 --- !u!136 &3087213870422153211
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -136,7 +138,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3087213870588131300}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

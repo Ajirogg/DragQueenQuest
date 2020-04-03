@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TempleTest.unity
+    path: Assets/Scenes/Temple.unity
     guid: 483ed27210ed9984b9429575a859c276
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: 42b0fa7e311df2a46beebced8cadbef5
   m_configObjects: {}

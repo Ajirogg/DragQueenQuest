@@ -20,12 +20,12 @@ public class PlayerController2D : MonoBehaviour
 
     bool isJumping;
 
-    private bool lookRight = false;
+    private bool lookRight = true;
 
-    private Vector3 camTarget = Vector3.zero;
+    private Vector3 camTarget;
     //[SerializeField] private float WaitTimeBeforeLookUp = 2.0f;
-    [SerializeField] private Vector3 camLookRight = Vector3.zero;
-    [SerializeField] private Vector3 camLookLeft = Vector3.zero;
+    [SerializeField] private Vector3 camLookRight;
+    [SerializeField] private Vector3 camLookLeft;
    // [SerializeField] private Vector3 camLookUp = Vector3.zero;
 
     [Header("Scene Objects")]
@@ -38,6 +38,9 @@ public class PlayerController2D : MonoBehaviour
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
+
+        camTarget = camLookRight;
+        lookRight = true;
     }
 
     // Start is called before the first frame update
@@ -127,6 +130,10 @@ public class PlayerController2D : MonoBehaviour
         if ((Input.GetAxis("Horizontal") < 0 && lookRight) || (Input.GetAxis("Horizontal") > 0 && !lookRight))
         {
             lookRight = !lookRight;
+
+            // A MODIFIER => Pour que le perso regarde droit devant lui
+            body.transform.LookAt(body.transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, 0));
+            Debug.Log("TO MODIFY ORIENTATION");
 
             if (lookRight)
             {

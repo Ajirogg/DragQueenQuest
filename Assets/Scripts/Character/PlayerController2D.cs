@@ -200,8 +200,6 @@ public class PlayerController2D : MonoBehaviour
 
         
         return Vector3.Dot((lastCheckptReachPos - prevCheckptPos).normalized, (playerPos - lastCheckptReachPos).normalized) < 0f && Vector3.Dot((prevCheckptPos - lastCheckptReachPos).normalized, (playerPos - prevCheckptPos).normalized) < 0f;
-        
-
     }
 
     public void SetNewCheckpoints(GameObject prevCheckpt, GameObject lastCheckpointReach, GameObject nextCheckpt)

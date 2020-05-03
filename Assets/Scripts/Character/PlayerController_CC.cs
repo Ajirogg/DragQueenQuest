@@ -34,6 +34,8 @@ public class PlayerController_CC : MonoBehaviour
     [Header("Body model")]
     [SerializeField] private GameObject body = null;
     [SerializeField] private GameObject steadycam = null;
+   /* private Quaternion rotationDesire;
+    private float rotateSpeed = 2;*/
 
     [Space]
     [Header("Path Following")]
@@ -247,10 +249,12 @@ public class PlayerController_CC : MonoBehaviour
         {
             if (lookRight)
             {
+               // rotationDesire = Quaternion.LookRotation(targetNext - body.transform.position);
                 body.transform.LookAt(targetNext);
             }
             else
             {
+               // rotationDesire = Quaternion.LookRotation(targetPrev - body.transform.position);
                 body.transform.LookAt(targetPrev);
                 
             }
@@ -260,6 +264,7 @@ public class PlayerController_CC : MonoBehaviour
             {
                 if (lookRight)
                 {
+                   // rotationDesire = Quaternion.LookRotation(targetCheckpt - body.transform.position);
                     body.transform.LookAt(targetCheckpt);
 
                 }
@@ -272,6 +277,7 @@ public class PlayerController_CC : MonoBehaviour
             {
                 if (lookRight)
                 {
+                   // rotationDesire = Quaternion.LookRotation(targetNext - body.transform.position);
                     body.transform.LookAt(targetNext);
                }
                 else
@@ -281,12 +287,14 @@ public class PlayerController_CC : MonoBehaviour
                 }
             }
         }
-       // SmoothTravelCamera();
+        // SmoothTravelCamera();
+        // transform.rotation = Quaternion.Slerp(transform.rotation, rotationDesire, rotateSpeed * Time.deltaTime);
+
     }
 
 
-   /* void SmoothTravelCamera()
-    {
-        steadycam.transform.rotation = new Quaternion(body.transform.rotation.x, body.transform.rotation.y % 180 - 90, body.transform.rotation.z, body.transform.rotation.w);
-    }*/
+    /* void SmoothTravelCamera()
+     {
+         steadycam.transform.rotation = new Quaternion(body.transform.rotation.x, body.transform.rotation.y % 180 - 90, body.transform.rotation.z, body.transform.rotation.w);
+     }*/
 }
